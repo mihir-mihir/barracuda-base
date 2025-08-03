@@ -1,0 +1,18 @@
+services:
+  barracuda-template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: barracuda-template
+    image: barracuda-template:latest
+    privileged: true
+    tty: true
+    network_mode: host
+    volumes:
+      - $HOME/.ssh:/home/ros/.ssh
+      - $HOME/.gitconfig:/home/ros/.gitconfig
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $PWD/catkin_ws:/home/ros/catkin_ws
+    user: ros
+    environment:
+      - DISPLAY
