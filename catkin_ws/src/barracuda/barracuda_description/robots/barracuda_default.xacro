@@ -6,6 +6,7 @@
 
     <xacro:include filename="$(find uuv_descriptions)/urdf/common.urdf.xacro"/>
     <xacro:include filename="$(find uuv_gazebo_ros_plugins)/urdf/thruster_snippets.xacro"/>
+    <xacro:include filename="$(find dave_snippets)/urdf/sensor_snippets.xacro"/>
     <xacro:property name="prop_mesh_file" value="file://$(find barracuda_description)/meshes/t200_thruster.dae"/>
 
     <!-- "Dummy" base link to eliminate root link inertia warning -->
@@ -46,6 +47,10 @@
     <xacro:dvl parent_link="$(arg namespace)/base_link" dvl_name="dvl" namespace="$(arg namespace)" />
     <xacro:lidar parent_link="$(arg namespace)/barracuda_link" lidar_name="ping360" namespace="$(arg namespace)" />
     <xacro:altimeter parent_link="$(arg namespace)/barracuda_link" altimeter_name="ping1d" namespace="$(arg namespace)" />
+    <xacro:default_pose_3d_macro
+        namespace="$(arg namespace)"
+        parent_link="$(arg namespace)/base_link"
+        inertial_reference_frame="world" />
 
     <xacro:include filename="$(find barracuda_description)/urdf/depth_camera.xacro"/>
     <xacro:depth_camera parent_link="$(arg namespace)/barracuda_link" namespace="$(arg namespace)"/>
@@ -58,7 +63,7 @@
             <debug>$(arg debug)</debug>
 
             <link name="$(arg namespace)/base_link">
-            <neutrally_buoyant>0</neutrally_buoyant>
+            <neutrally_buoyant>1</neutrally_buoyant>
             <!-- See eNovus technical specifications -->
             <volume>0.036</volume> <!-- Volume calculated for 80 lb sub with slight positive buoyancy -->
             <box>
